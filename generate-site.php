@@ -2,6 +2,13 @@
 
 // Quick and dirty script to generate the static site.
 
+// Build for prod:
+// $ php generate-site.php site-structure.json
+
+// Build a version viewable locally:
+// $ php generate-site.php site-structure.json ''
+// $ cd docs && php -S localhost:8080
+
 $site_structure = file_get_contents($argv[1]);
 $site_structure = json_decode($site_structure, TRUE);
 if (empty($site_structure)) {
@@ -9,7 +16,12 @@ if (empty($site_structure)) {
     exit -1;
 }
 
+// Github pages requires publishing to /docs.
 $destination_dir = __DIR__ . '/docs';
+
+// Github pages adds the project name as the base path, so take that into
+// account.
+$base_path = $argv[2] ?? $site_structure['basePath'] ?? '';
 
 $template = <<<HTML
 <!DOCTYPE html>
@@ -18,9 +30,9 @@ $template = <<<HTML
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ site_title }}</title>
-    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="{$base_path}/static/css/main.css">
     <script src="https://unpkg.com/elm-canvas@2.2/elm-canvas.js"></script>
-    <script src="/static/js/main.min.js?v=01"></script>
+    <script src="{$base_path}/static/js/main.min.js?v=01"></script>
 </head>
 <body>
     <h1>{{ title }}</h1>
@@ -53,7 +65,7 @@ function generate_homepage(array $site_structure, string $template, string $dest
     foreach ($site_structure['content'] as $module) {
         $list .=  sprintf(
             '<li><a href="%s">%s</a>%s</li>',
-            '/' . $module['slug'],
+            url([$module['slug']]),
             $module['title'],
             render_sketch_list($module)
         );
@@ -72,8 +84,9 @@ function generate_module_page(string $site_title, array $module, string $templat
         'title' => $site_title,
         'main_content' => render_sketch_list($module),
         'introduction' => sprintf(
-            '<h2>%s</h2><a href="/">« Home</a>',
-            $module['title']
+            '<h2>%s</h2><a href="%s">« Home</a>',
+            $module['title'],
+            url()
         )
     ];
 
@@ -99,7 +112,7 @@ HTML;
 
     $main_content_variables = [
         'sketch_title' => $sketch['title'],
-        'chapter_url' => '/' . $module['slug'],
+        'chapter_url' => url([$module['slug']]),
         'chapter_name' => $module['title'],
         'module' => $module['module'],
         'sketch' => $sketch['module']
@@ -126,13 +139,19 @@ function render_sketch_list(array $module): string {
     foreach ($module['content'] as $sketch) {
         $sketch_list .= sprintf(
             '<li><a href="%s">%s</a></li>',
-            '/' . $module['slug'] . '/' . $sketch['slug'],
+            url([$module['slug'], $sketch['slug']]),
             $sketch['title']
         );
     }
     $sketch_list .= '</ul>';
 
     return $sketch_list;
+}
+
+function url(array $parts = []): string {
+    global $base_path;
+
+    return $base_path . '/' . implode('/', $parts);
 }
 
 function render_page(string $template, array $variables): string {
