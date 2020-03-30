@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Build everything
+elm make src/**/*.elm --optimize --output=docs/static/js/main.js
+
+# Compress the JS as much as possible
+uglifyjs docs/static/js/main.js --compress "pure_funcs=[F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9],pure_getters,keep_fargs=false,unsafe_comps,unsafe" | uglifyjs --mangle --output=docs/static/js/main.min.js
+
+# Remove the uncompressed version
+rm docs/static/js/main.js
+
+# Rebuild the site with PHP.
+php generate-site.php site-structure.json

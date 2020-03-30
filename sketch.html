@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #FDFDFD;
+      }
+      canvas {
+        background: #FFFFFF;
+      }
+    </style>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <main></main>
+    <script src="https://unpkg.com/elm-canvas@2.2/elm-canvas.js"></script>
+    <script src="sketch.js"></script>
+    <script>
+      // Usually you do `Elm.main.init({...})`, but every module has a different
+      // name, and we want to reuse this template with elm-live.
+      // Since everything is organised as <chapter>/<sketch>, we run init of
+      // the first nested object.
+      var firstProperty = (o) => o[Object.keys(o)[0]];
+      var module = firstProperty(firstProperty(Elm));
+      var app = module.init({ node: document.querySelector("main") });
+    </script>
+  </body>
+</html>

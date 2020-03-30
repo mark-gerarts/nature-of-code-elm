@@ -1,0 +1,18 @@
+{
+    "title": "Nature of Code - Elm",
+    "introduction": "<a href=\"https://natureofcode.com/\">Nature of Code</a> examples and exercises implemented in Elm. Let's see how far we can get with a functional language :). <a href=\"https://github.com/mark-gerarts/nature-of-code-elm\">Source</a>.",
+    "content": [
+        {
+            "module": "Introduction",
+            "title": "0. Introduction",
+            "slug": "introduction",
+            "content": [
+                {
+                    "module": "TraditionalRandomWalk",
+                    "title": "Example I.1: Traditional Random Walk",
+                    "slug": "traditional-random-walk"
+                }
+            ]
+        }
+    ]
+}
