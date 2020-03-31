@@ -104,7 +104,13 @@ function generate_sketch_page(string $site_title, array $module, array $sketch, 
     $main_content_template = <<<HTML
 <h2>{{ sketch_title }}</h2>
 <main></main>
-<p><a href="{{ chapter_url }}"><< {{ chapter_name }}</a></p>
+<p>
+    <ul>
+        <li><a href="https://github.com/mark-gerarts/nature-of-code-elm/blob/master/src/{{ module }}/{{ sketch }}.elm">View sketch source</a></li>
+        <li><a href="{{ chapter_url }}">Go to chapter index</a></li>
+        <li><a href="{{ base_url }}">Go to homepage</a></li>
+    </ul>
+</p>
 <script>
     Elm.{{ module }}.{{ sketch }}.init({ node: document.querySelector('main') })
 </script>
@@ -112,8 +118,9 @@ HTML;
 
     $main_content_variables = [
         'sketch_title' => $sketch['title'],
+        'base_url' => url(),
         'chapter_url' => url([$module['slug']]),
-        'chapter_name' => $module['title'],
+        'source_url' => 'https://www.github.com/mark-gerarts/nature-of-code-elm',
         'module' => $module['module'],
         'sketch' => $sketch['module']
     ];

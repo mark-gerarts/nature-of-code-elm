@@ -5,7 +5,7 @@ in Elm. Let's see how far we can get in a functional language :).
 
 See the sketches live [here](https://mark-gerarts.github.io/nature-of-code-elm).
 
-## Running the examples local
+## Running the examples locally
 
 Run a single sketch (requires [elm-live](https://github.com/wking-io/elm-live#installation)):
 
