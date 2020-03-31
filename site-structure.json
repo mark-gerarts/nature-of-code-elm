@@ -12,6 +12,11 @@
                     "module": "TraditionalRandomWalk",
                     "title": "Example I.1: Traditional Random Walk",
                     "slug": "traditional-random-walk"
+                },
+                {
+                    "module": "RandomNumberDistribution",
+                    "title": "Example I.2: Random Number Distribution",
+                    "slug": "random-number-distribution"
                 }
             ]
         }
