@@ -65,7 +65,7 @@ function generate_homepage(array $site_structure, string $template, string $dest
     foreach ($site_structure['content'] as $module) {
         $list .=  sprintf(
             '<li><a href="%s">%s</a>%s</li>',
-            url([$module['slug']]),
+            url([to_slug($module['module'])]),
             $module['title'],
             render_sketch_list($module)
         );
@@ -92,7 +92,7 @@ function generate_module_page(string $site_title, array $module, string $templat
 
     $module_page = render_page($template, $variables);
 
-    $module_directory = $destination_dir . '/' . $module['slug'];
+    $module_directory = $destination_dir . '/' . to_slug($module['module']);
     if (!file_exists($module_directory)) {
         mkdir($module_directory);
     }
@@ -119,7 +119,7 @@ HTML;
     $main_content_variables = [
         'sketch_title' => $sketch['title'],
         'base_url' => url(),
-        'chapter_url' => url([$module['slug']]),
+        'chapter_url' => url([to_slug($module['module'])]),
         'source_url' => 'https://www.github.com/mark-gerarts/nature-of-code-elm',
         'module' => $module['module'],
         'sketch' => $sketch['module']
@@ -133,7 +133,7 @@ HTML;
 
     $sketch_page = render_page($template, $variables);
 
-    $sketch_directory = $destination_dir . '/' . $module['slug'] . '/' . $sketch['slug'];
+    $sketch_directory = $destination_dir . '/' . to_slug($module['module']) . '/' . to_slug($sketch['module']);
     if (!file_exists($sketch_directory)) {
         mkdir($sketch_directory);
     }
@@ -146,7 +146,7 @@ function render_sketch_list(array $module): string {
     foreach ($module['content'] as $sketch) {
         $sketch_list .= sprintf(
             '<li><a href="%s">%s</a></li>',
-            url([$module['slug'], $sketch['slug']]),
+            url([to_slug($module['module']), to_slug($sketch['module'])]),
             $sketch['title']
         );
     }
@@ -159,6 +159,12 @@ function url(array $parts = []): string {
     global $base_path;
 
     return $base_path . '/' . implode('/', $parts);
+}
+
+function to_slug(string $module_name): string {
+    $slug = preg_replace('/(?!^)[A-Z]/', '-${0}', $module_name);
+
+    return strtolower($slug);
 }
 
 function render_page(string $template, array $variables): string {
