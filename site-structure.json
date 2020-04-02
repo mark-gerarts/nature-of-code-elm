@@ -14,6 +14,14 @@
                 {
                     "module": "RandomNumberDistribution",
                     "title": "Example I.2: Random Number Distribution"
+                },
+                {
+                    "module": "BiasedToTheRightRandomWalk",
+                    "title": "Example I.3: Walker that tends to move to the right"
+                },
+                {
+                    "module": "BiasedRandomWalk",
+                    "title": "Exercise I.1: Walker that tends to move to the bottom right"
                 }
             ]
         }
