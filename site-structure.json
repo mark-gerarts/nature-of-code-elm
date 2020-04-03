@@ -22,6 +22,10 @@
                 {
                     "module": "BiasedRandomWalk",
                     "title": "Exercise I.1: Walker that tends to move to the bottom right"
+                },
+                {
+                    "module": "DynamicBiasedRandomWalk",
+                    "title": "Exercise I.3: Walker that tends to move to the mouse"
                 }
             ]
         }

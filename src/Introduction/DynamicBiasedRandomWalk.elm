@@ -6,23 +6,25 @@ import Canvas exposing (..)
 import Canvas.Settings exposing (..)
 import Color
 import Html exposing (Html)
+import Html.Events.Extra.Mouse as Mouse
 import Random
-
-
-type Direction
-    = Left
-    | Right
-    | Up
-    | Down
 
 
 type Msg
     = Frame Float
-    | Move Direction
+    | MoveMsg Move
+    | MouseMoved Point
+
+
+type Move
+    = ToMouse
+    | AddPoint Point
 
 
 type alias Model =
-    { walkerPosition : Point }
+    { walkerPosition : Point
+    , mousePosition : Point
+    }
 
 
 main : Program () Model Msg
@@ -52,32 +54,54 @@ subscriptions _ =
 
 init : () -> ( Model, Cmd Msg )
 init () =
-    ( { walkerPosition = ( width / 2, height / 2 ) }, Cmd.none )
+    let
+        center =
+            ( width / 2, height / 2 )
+    in
+    ( { walkerPosition = center, mousePosition = center }, Cmd.none )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Frame _ ->
-            ( model, Random.generate Move randomDirection )
+            ( model, Random.generate MoveMsg randomMove )
 
-        Move direction ->
-            ( { walkerPosition = move direction model.walkerPosition }, Cmd.none )
+        MoveMsg move ->
+            case move of
+                ToMouse ->
+                    ( { model | walkerPosition = moveOneStepToPoint model.mousePosition model.walkerPosition }, Cmd.none )
+
+                AddPoint p ->
+                    ( { model | walkerPosition = add p model.walkerPosition }, Cmd.none )
+
+        MouseMoved p ->
+            ( { model | mousePosition = p }, Cmd.none )
 
 
 view : Model -> Html Msg
 view { walkerPosition } =
     Canvas.toHtml
         ( round width, round height )
-        []
+        [ Mouse.onMove (.offsetPos >> MouseMoved) ]
         [ shapes [ fill Color.black ] [ rect walkerPosition 1 1 ] ]
 
 
-{-| Give the walker a 50% chance of moving to the mouse position. @todo
+{-| Give the walker a 50% chance of moving to the mouse position. Very useful to
+learn about Elm's random library!
 -}
-randomDirection : Random.Generator Direction
-randomDirection =
-    Random.weighted ( 20, Up ) [ ( 20, Down ), ( 20, Left ), ( 40, Right ) ]
+randomMove : Random.Generator Move
+randomMove =
+    Random.uniform True [ False ]
+        |> Random.andThen
+            (\moveToMouse ->
+                if moveToMouse then
+                    Random.constant ToMouse
+
+                else
+                    Random.pair (Random.float -1 1) (Random.float -1 1)
+                        |> Random.map (\p -> AddPoint p)
+            )
 
 
 add : Point -> Point -> Point
@@ -85,17 +109,22 @@ add ( x1, y1 ) ( x2, y2 ) =
     ( x1 + x2, y1 + y2 )
 
 
-move : Direction -> Point -> Point
-move direction =
-    case direction of
-        Up ->
-            add ( 0, -1 )
+{-| Technically we don't know about vectors yet, but this way the walker moves
+"straight" to the mouse, as opposed to using a naive implementation
+-}
+moveOneStepToPoint : Point -> Point -> Point
+moveOneStepToPoint dest src =
+    let
+        diff ( x1, y1 ) ( x2, y2 ) =
+            ( x1 - x2, y1 - y2 )
 
-        Down ->
-            add ( 0, 1 )
+        magnitude ( x, y ) =
+            sqrt (x ^ 2 + y ^ 2)
 
-        Left ->
-            add ( -1, 0 )
+        div ( x1, y1 ) n =
+            ( x1 / n, y1 / n )
 
-        Right ->
-            add ( 1, 0 )
+        normalize v =
+            div v (magnitude v)
+    in
+    add src (normalize (diff dest src))
