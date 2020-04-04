@@ -14,10 +14,13 @@ import Random.Float exposing (normal)
 type Msg
     = Frame Float
     | RandomSplatter Splatter
+    | BaseColor Color
 
 
 type alias Model =
-    List Splatter
+    { splatters : List Splatter
+    , baseColor : Maybe Color
+    }
 
 
 type alias Splatter =
@@ -69,27 +72,37 @@ subscriptions _ =
 
 init : () -> ( Model, Cmd Msg )
 init () =
-    ( [], Cmd.none )
+    ( { splatters = [], baseColor = Nothing }
+    , Random.generate BaseColor randomColor
+    )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg splatters =
+update msg model =
     case msg of
-        Frame _ ->
-            ( splatters
-            , if length splatters < maxSplatters then
-                Random.generate RandomSplatter randomSplatter
+        BaseColor c ->
+            ( { model | baseColor = Just c }, Cmd.none )
 
-              else
-                Cmd.none
+        Frame _ ->
+            ( model
+            , case model.baseColor of
+                Nothing ->
+                    Cmd.none
+
+                Just baseColor ->
+                    if length model.splatters < maxSplatters then
+                        Random.generate RandomSplatter (randomSplatter baseColor)
+
+                    else
+                        Cmd.none
             )
 
         RandomSplatter splatter ->
-            ( splatter :: splatters, Cmd.none )
+            ( { model | splatters = splatter :: model.splatters }, Cmd.none )
 
 
 view : Model -> Html Msg
-view splatters =
+view { splatters } =
     Canvas.toHtml
         ( round width, round height )
         []
@@ -108,8 +121,8 @@ renderSplatter { position, color, radius } =
         [ circle position radius ]
 
 
-randomSplatter : Random.Generator Splatter
-randomSplatter =
+randomSplatter : Color -> Random.Generator Splatter
+randomSplatter baseColor =
     let
         -- Cluster the splatters around the center with the normal distribution.
         position =
@@ -132,17 +145,28 @@ randomSplatter =
 
         radius =
             normal 25 5
+
+        rgba =
+            Color.toRgba baseColor
     in
     Random.map3
         (\p o r ->
             { position = p
-            , color = Color.rgba 0 1 0 o
+            , color = Color.fromRgba { rgba | alpha = o }
             , radius = r * growthFactor p
             }
         )
         position
         opacity
         radius
+
+
+randomColor : Random.Generator Color
+randomColor =
+    Random.map3 (\r g b -> Color.rgb r g b)
+        (Random.float 0 1)
+        (Random.float 0 1)
+        (Random.float 0 1)
 
 
 distance : Point -> Point -> Float

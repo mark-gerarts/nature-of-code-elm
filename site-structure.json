@@ -9,15 +9,19 @@
             "content": [
                 {
                     "module": "TraditionalRandomWalk",
-                    "title": "Example I.1: Traditional Random Walk"
+                    "title": "Example I.1: Traditional random Walk"
                 },
                 {
                     "module": "RandomNumberDistribution",
-                    "title": "Example I.2: Random Number Distribution"
+                    "title": "Example I.2: Random number distribution"
                 },
                 {
                     "module": "BiasedToTheRightRandomWalk",
                     "title": "Example I.3: Walker that tends to move to the right"
+                },
+                {
+                    "module": "GaussianDistribution",
+                    "title": "Example I.4: Gaussian distribution"
                 },
                 {
                     "module": "BiasedRandomWalk",
@@ -26,6 +30,10 @@
                 {
                     "module": "DynamicBiasedRandomWalk",
                     "title": "Exercise I.3: Walker that tends to move to the mouse"
+                },
+                {
+                    "module": "PaintSplatter",
+                    "title": "Exercise I.4: Paint splatter"
                 }
             ]
         }
