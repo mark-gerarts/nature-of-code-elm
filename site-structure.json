@@ -24,6 +24,10 @@
                     "title": "Example I.4: Gaussian distribution"
                 },
                 {
+                    "module": "PerlinNoiseWalker",
+                    "title": "Example I.5: Perlin noise walker"
+                },
+                {
                     "module": "BiasedRandomWalk",
                     "title": "Exercise I.1: Walker that tends to move to the bottom right"
                 },
@@ -37,7 +41,11 @@
                 },
                 {
                     "module": "GaussianRandomWalk",
-                    "title": "Exercise I.4: Guassian random walk"
+                    "title": "Exercise I.5: Guassian random walk"
+                },
+                {
+                    "module": "CustomDistributionWalker",
+                    "title": "Exercise I.6: Custom distribution walker"
                 }
             ]
         }
