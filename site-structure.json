@@ -46,6 +46,10 @@
                 {
                     "module": "CustomDistributionWalker",
                     "title": "Exercise I.6: Custom distribution walker"
+                },
+                {
+                    "module": "PerlinNoiseWalkerStepSize",
+                    "title": "Exercise I.7: Perlin noise walker (step size)"
                 }
             ]
         }

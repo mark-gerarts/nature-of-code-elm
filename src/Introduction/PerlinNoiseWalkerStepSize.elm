@@ -1,10 +1,9 @@
-module Introduction.PerlinNoiseWalker exposing (main)
+module Introduction.PerlinNoiseWalkerStepSize exposing (main)
 
 import Browser
 import Browser.Events exposing (onAnimationFrameDelta)
 import Canvas exposing (..)
 import Canvas.Settings exposing (..)
-import Canvas.Settings.Line exposing (..)
 import Color
 import Html exposing (Html)
 import Processing exposing (mapValue)
@@ -76,19 +75,7 @@ view { position } =
     Canvas.toHtml
         ( round width, round height )
         []
-        [ clearScreen, renderCircle position ]
-
-
-clearScreen : Renderable
-clearScreen =
-    shapes [ fill Color.white ] [ rect ( 0, 0 ) width height ]
-
-
-renderCircle : Point -> Renderable
-renderCircle position =
-    shapes
-        [ fill Color.gray, stroke Color.black, lineWidth 2 ]
-        [ circle position 16 ]
+        [ shapes [ fill Color.black ] [ rect position 1 1 ] ]
 
 
 step : Model -> Model
@@ -99,22 +86,30 @@ step model =
 
         Just permutationTable ->
             let
-                newX =
-                    noise1d permutationTable model.tx
-                        -- Unlike Processing's `noise` function, the simplex
-                        -- library generates values between -1 and 1.
-                        |> mapValue -1 1 0 width
+                newPosition =
+                    add model.position (randomPositionIncrement permutationTable model.tx model.ty)
 
-                newY =
-                    noise1d permutationTable model.ty
-                        |> mapValue -1 1 0 height
+                inc x =
+                    x + 0.005
             in
-            { model | tx = model.tx + 0.005, ty = model.ty + 0.005, position = ( newX, newY ) }
+            { model | tx = inc model.tx, ty = inc model.ty, position = newPosition }
 
 
-{-| The simplex library doesn't provide a noise1d, so we'll use noise2d with a
-fixed x-value.
--}
+randomPositionIncrement : PermutationTable -> Float -> Float -> Point
+randomPositionIncrement permutationTable tx ty =
+    let
+        stepSize x =
+            noise1d permutationTable x
+                |> mapValue -1 1 -3 3
+    in
+    ( stepSize tx, stepSize ty )
+
+
 noise1d : PermutationTable -> Float -> Float
 noise1d table =
     noise2d table 0
+
+
+add : Point -> Point -> Point
+add ( x1, y1 ) ( x2, y2 ) =
+    ( x1 + x2, y1 + y2 )
