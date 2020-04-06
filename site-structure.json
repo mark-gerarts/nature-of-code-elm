@@ -28,6 +28,10 @@
                     "title": "Example I.5: Perlin noise walker"
                 },
                 {
+                    "module": "TwoDimensionalPerlinNoise",
+                    "title": "Example I.6: 2D Perlin noise"
+                },
+                {
                     "module": "BiasedRandomWalk",
                     "title": "Exercise I.1: Walker that tends to move to the bottom right"
                 },

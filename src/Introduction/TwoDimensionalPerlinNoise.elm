@@ -1,7 +1,6 @@
 module Introduction.TwoDimensionalPerlinNoise exposing (main)
 
 import Browser
-import Browser.Events exposing (onAnimationFrameDelta)
 import Canvas exposing (..)
 import Canvas.Settings exposing (..)
 import Color
@@ -82,24 +81,22 @@ render model =
 renderNoise : PermutationTable -> List Renderable
 renderNoise permutationTable =
     let
-        -- @todo: for some reason a square gets rendered instead of the full
-        -- canvas
         coordinates =
             fold2d
-                { rows = round width, cols = round height }
-                (\( x, y ) result -> ( x, y ) :: result)
+                { rows = round height, cols = round width }
+                (::)
                 []
                 |> map (\( x, y ) -> ( toFloat x, toFloat y ))
 
         pointToAlpha ( x, y ) =
             let
-                xoff =
-                    ((y * width) + x) * 0.005
+                xoffFactor =
+                    0.01
 
-                yoff =
-                    y * 0.01
+                yoffFactor =
+                    0.01
             in
-            mapValue -1 1 0 1 (noise2d permutationTable xoff yoff)
+            mapValue -1 1 0 1 (noise2d permutationTable (x * xoffFactor) (y * yoffFactor))
 
         alphaValues =
             map (\p -> ( p, pointToAlpha p )) coordinates
