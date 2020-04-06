@@ -64,7 +64,7 @@ function generate_homepage(array $site_structure, string $template, string $dest
     $list = '<ul>';
     foreach ($site_structure['content'] as $module) {
         $list .=  sprintf(
-            '<li><a href="%s">%s</a>%s</li>',
+            "<li><a href=\"%s\">%s</a>\n%s</li>\n",
             url([to_slug($module['module'])]),
             $module['title'],
             render_sketch_list($module)
@@ -145,7 +145,7 @@ function render_sketch_list(array $module): string {
     $sketch_list = '<ul>';
     foreach ($module['content'] as $sketch) {
         $sketch_list .= sprintf(
-            '<li><a href="%s">%s</a></li>',
+            "<li><a href=\"%s\">%s</a></li>\n",
             url([to_slug($module['module']), to_slug($sketch['module'])]),
             $sketch['title']
         );
