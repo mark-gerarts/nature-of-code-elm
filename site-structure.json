@@ -54,6 +54,10 @@
                 {
                     "module": "PerlinNoiseWalkerStepSize",
                     "title": "Exercise I.7: Perlin noise walker (step size)"
+                },
+                {
+                    "module": "ConfigurablePerlinNoise",
+                    "title": "Exercise I.8: Configurable Perlin noise"
                 }
             ]
         }
