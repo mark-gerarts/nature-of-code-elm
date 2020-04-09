@@ -58,6 +58,10 @@
                 {
                     "module": "ConfigurablePerlinNoise",
                     "title": "Exercise I.8: Configurable Perlin noise"
+                },
+                {
+                    "module": "AnimatedPerlinNoise",
+                    "title": "Exercise I.9: Animated Perlin noise"
                 }
             ]
         }
