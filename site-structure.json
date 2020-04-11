@@ -64,6 +64,20 @@
                     "title": "Exercise I.9: Animated Perlin noise"
                 }
             ]
+        },
+        {
+            "module": "Vectors",
+            "title": "1. Vectors",
+            "content": [
+                {
+                    "module": "BouncingBallWithoutVectors",
+                    "title": "Example 1.1: Bouncing ball with no vectors"
+                },
+                {
+                    "module": "BouncingBallWithVectors",
+                    "title": "Example 1.2: Bouncing ball with vectors"
+                }
+            ]
         }
     ]
 }

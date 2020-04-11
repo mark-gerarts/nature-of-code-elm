@@ -4,6 +4,7 @@
 in Elm. Let's see how far we can get in a functional language :).
 
 See the sketches live [here](https://mark-gerarts.github.io/nature-of-code-elm).
+Note that 3D sketches are omitted since these are not supported by elm-canvas.
 
 ## Running the examples locally
 
