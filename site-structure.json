@@ -82,6 +82,22 @@
                     "title": "Example 1.3: Vector subtraction"
                 },
                 {
+                    "module": "VectorMultiplication",
+                    "title": "Example 1.4: Multiplying a vector"
+                },
+                {
+                    "module": "VectorMagnitude",
+                    "title": "Example 1.5: Vector magnitude"
+                },
+                {
+                    "module": "VectorNormalization",
+                    "title": "Example 1.6: Normalizing a vector"
+                },
+                {
+                    "module": "MotionVelocity",
+                    "title": "Example 1.7: Motion 101 (velocity)"
+                },
+                {
                     "module": "TraditionalRandomWalkVectors",
                     "title": "Exercise 1.2: Walker with vectors"
                 }
