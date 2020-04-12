@@ -76,6 +76,14 @@
                 {
                     "module": "BouncingBallWithVectors",
                     "title": "Example 1.2: Bouncing ball with vectors"
+                },
+                {
+                    "module": "VectorSubtraction",
+                    "title": "Example 1.3: Vector subtraction"
+                },
+                {
+                    "module": "TraditionalRandomWalkVectors",
+                    "title": "Exercise 1.2: Walker with vectors"
                 }
             ]
         }
