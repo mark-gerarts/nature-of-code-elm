@@ -1,6 +1,6 @@
 module Processing exposing
     ( mapValue
-    , toPoint
+    , limit, toPoint
     )
 
 {-| Provides common helper functions that are part of Processing, but don't
@@ -14,7 +14,7 @@ have a suitable Elm alternative.
 -}
 
 import Canvas exposing (Point)
-import Math.Vector2 exposing (Vec2, getX, getY)
+import Math.Vector2 as V
 
 
 {-| Recreates Processing's `map` function, which projects a bounded value to new
@@ -31,6 +31,20 @@ mapValue min max newMin newMax x =
 {-| Technically not really part of P5, but it's used so often with the
 combination of elm-canvas and Vec2 that we might as well put it here.
 -}
-toPoint : Vec2 -> Point
+toPoint : V.Vec2 -> Point
 toPoint v =
-    ( getX v, getY v )
+    ( V.getX v, V.getY v )
+
+
+{-| Limits a vector to the given size by normalizing and then scaling.
+
+    limit 10 (vec2 20 0) == vec2 10 0
+
+-}
+limit : Float -> V.Vec2 -> V.Vec2
+limit max v =
+    if V.length v <= max then
+        v
+
+    else
+        V.scale max (V.normalize v)

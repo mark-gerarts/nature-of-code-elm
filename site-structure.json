@@ -102,6 +102,10 @@
                     "title": "Example 1.8: Motion 101 (velocity and constant acceleration)"
                 },
                 {
+                    "module": "MotionRandomAcceleration",
+                    "title": "Example 1.9: Motion 101 (velocity and random acceleration)"
+                },
+                {
                     "module": "TraditionalRandomWalkVectors",
                     "title": "Exercise 1.2: Walker with vectors"
                 }
