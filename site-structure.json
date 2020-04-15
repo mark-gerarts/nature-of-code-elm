@@ -108,6 +108,10 @@
                 {
                     "module": "TraditionalRandomWalkVectors",
                     "title": "Exercise 1.2: Walker with vectors"
+                },
+                {
+                    "module": "MotionPerlinAcceleration",
+                    "title": "Exercise 1.6: Motion with Perlin-based acceleration"
                 }
             ]
         }
