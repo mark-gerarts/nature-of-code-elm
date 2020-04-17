@@ -110,6 +110,10 @@
                     "title": "Exercise 1.2: Walker with vectors"
                 },
                 {
+                    "module": "CarSimulation",
+                    "title": "Exercise 1.5: Car simulation"
+                },
+                {
                     "module": "MotionPerlinAcceleration",
                     "title": "Exercise 1.6: Motion with Perlin-based acceleration"
                 }
