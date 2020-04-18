@@ -106,6 +106,14 @@
                     "title": "Example 1.9: Motion 101 (velocity and random acceleration)"
                 },
                 {
+                    "module": "AcceleratingTowardsTheMouse",
+                    "title": "Example 1.10: Accelerating towards the mouse"
+                },
+                {
+                    "module": "ArrayOfMovers",
+                    "title": "Example 1.11: Array of movers accelerating towards the mouse"
+                },
+                {
                     "module": "TraditionalRandomWalkVectors",
                     "title": "Exercise 1.2: Walker with vectors"
                 },
@@ -116,6 +124,10 @@
                 {
                     "module": "MotionPerlinAcceleration",
                     "title": "Exercise 1.6: Motion with Perlin-based acceleration"
+                },
+                {
+                    "module": "VariableAccelerationTowardsTheMouse",
+                    "title": "Exercise 1.8: Variable acceleration towards the mouse"
                 }
             ]
         }
