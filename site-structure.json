@@ -130,6 +130,16 @@
                     "title": "Exercise 1.8: Variable acceleration towards the mouse"
                 }
             ]
+        },
+        {
+            "module": "Forces",
+            "title": "2. Forces",
+            "content": [
+                {
+                    "module": "HeliumBalloon",
+                    "title": "Exercise 2.1: Helium filled balloon"
+                }
+            ]
         }
     ]
 }
